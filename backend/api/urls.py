@@ -19,5 +19,6 @@ router = routers.SimpleRouter()
 
 router.register(r"signup", user_view.SignUpView)
 router.register(r"feed", feed_view.FeedView)
+router.register(r"feed-item", feed_view.FeedItemView)
 
 urlpatterns.extend(router.urls)
