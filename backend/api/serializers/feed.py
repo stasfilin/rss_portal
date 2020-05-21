@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from api.serializers.comment import CommentSerializer
 from feed.models import Feed, FeedItem
 
 
@@ -26,6 +27,8 @@ class FeedSerializer(serializers.ModelSerializer):
 
 
 class FeedItemSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer(many=True)
+
     class Meta:
         model = FeedItem
         fields = (
@@ -37,4 +40,5 @@ class FeedItemSerializer(serializers.ModelSerializer):
             "author",
             "is_favorite",
             "is_read",
+            "comments",
         )

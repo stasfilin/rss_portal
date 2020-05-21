@@ -37,6 +37,7 @@ APPS = [
     "feed",
     "utils",
     "api",
+    "comment",
 ]
 
 INSTALLED_APPS = [
@@ -49,11 +50,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     "rest_framework_jwt.blacklist",
+    "corsheaders",
 ] + APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -128,6 +131,8 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.BasicAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
 }
 
 SWAGGER_SETTINGS = {
@@ -150,7 +155,7 @@ JWT_AUTH = {
     "JWT_VERIFY": True,
     "JWT_VERIFY_EXPIRATION": True,
     "JWT_LEEWAY": 0,
-    "JWT_EXPIRATION_DELTA": datetime.timedelta(seconds=300),
+    "JWT_EXPIRATION_DELTA": datetime.timedelta(days=1),
     "JWT_ALLOW_REFRESH": True,
     "JWT_REFRESH_EXPIRATION_DELTA": datetime.timedelta(days=7),
     "JWT_AUTH_HEADER_PREFIX": "Bearer",
@@ -163,3 +168,5 @@ JWT_AUTH = {
     "JWT_IMPERSONATION_COOKIE": None,
     "JWT_DELETE_STALE_BLACKLISTED_TOKENS": False,
 }
+
+CORS_ORIGIN_ALLOW_ALL = True

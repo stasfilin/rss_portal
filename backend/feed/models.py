@@ -2,7 +2,6 @@ import feedparser
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.conf import settings
-from django.utils import timezone
 
 
 def url_validation(value):
@@ -27,6 +26,9 @@ class Feed(models.Model):
     attempt = models.PositiveIntegerField(default=0)
     terminated = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{self.title}"
+
 
 class FeedItem(models.Model):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE, related_name="items")
@@ -42,3 +44,9 @@ class FeedItem(models.Model):
     )
     is_favorite = models.BooleanField(default=False)
     is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-published"]
+
+    def __str__(self):
+        return f"{self.title}"
