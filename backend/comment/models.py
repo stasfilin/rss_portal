@@ -15,3 +15,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.feed_item}"
+
+    class Meta:
+        ordering = ["-date_added"]

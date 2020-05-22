@@ -11,7 +11,7 @@ class CommentSerializer(serializers.ModelSerializer):
         help_text="Feed Item ID",
         write_only=True,
     )
-    date_added = serializers.DateTimeField(read_only=True)
+    date_added = serializers.DateTimeField(read_only=True, format="%B %e,%l:%M %p")
 
     class Meta:
         model = Comment

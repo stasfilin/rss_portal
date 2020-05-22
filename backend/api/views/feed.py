@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from rest_framework import status, mixins
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -48,12 +49,28 @@ class FeedItemView(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericView
     def get_queryset(self):
         return self.request.user.feed_items.all()
 
+    def get_serializer_context(self):
+        return {
+            "request": self.request,
+        }
+
     @action(detail=True, methods=["get"])
     def favorite(self, request, pk=None):
         feed_item = self.get_object()
-        feed_item.is_favorite ^= True
+        user = request.user
+        if feed_item.is_favorite.filter(pk=user.pk):
+            feed_item.is_favorite.remove(user)
+        else:
+            feed_item.is_favorite.add(user)
         feed_item.save()
 
-        return Response(
-            {"is_favorite": feed_item.is_favorite}, status=status.HTTP_200_OK
-        )
+        return Response({"is_favorite": True}, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["get"])
+    def read(self, request, pk=None):
+        feed_item = self.get_object()
+        user = request.user
+        feed_item.is_read.add(user)
+        feed_item.save()
+
+        return Response({"is_read": True}, status=status.HTTP_200_OK)

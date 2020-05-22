@@ -29,6 +29,9 @@ class FeedSerializer(serializers.ModelSerializer):
 class FeedItemSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True)
 
+    is_favorite = serializers.SerializerMethodField()
+    is_read = serializers.SerializerMethodField()
+
     class Meta:
         model = FeedItem
         fields = (
@@ -41,4 +44,15 @@ class FeedItemSerializer(serializers.ModelSerializer):
             "is_favorite",
             "is_read",
             "comments",
+            "read_link",
         )
+
+    def get_is_favorite(self, obj):
+        user = self.context.get("request").user
+
+        return obj.is_favorite.filter(pk=user.pk).exists()
+
+    def get_is_read(self, obj):
+        user = self.context.get("request").user
+
+        return obj.is_read.filter(pk=user.pk).exists()
