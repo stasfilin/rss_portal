@@ -1,10 +1,10 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:8000/api/';
+const API_URL = 'http://127.0.0.1:8000/api/';
 
 class FeedService {
-  getFeedItems(offset=10) {
+  getFeedItems(offset=0) {
     return axios.get(API_URL + 'feed-item/?offset='+offset, { headers: authHeader() });
   }
 
@@ -13,7 +13,7 @@ class FeedService {
   }
 
   getFeed() {
-    return axios.get(API_URL + 'feed', { headers: authHeader() });
+    return axios.get(API_URL + 'feed/', { headers: authHeader() });
   }
 
   addFeed(title, url) {
