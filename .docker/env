@@ -5,3 +5,5 @@ DB_SERVICE=postgres
 DB_PORT=5432
 
 REDIS_SERVER=redis://redis:6379
+npm_config_unsafe_perm=true
+NODE_ENV=development

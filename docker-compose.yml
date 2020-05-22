@@ -17,13 +17,15 @@ frontend:
   restart: always
   build: frontend
   volumes:
-    - ./frontend:/frontend:z
+    - ./frontend:/app:z
   links:
     - backend:backend
   env_file:
     - ./.docker/env
   expose:
     - "8080"
+
+  command: sh -c 'yarn serve'
 
 nginx:
   build: ./.docker/nginx/
