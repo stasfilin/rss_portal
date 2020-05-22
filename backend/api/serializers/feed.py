@@ -5,9 +5,9 @@ from feed.models import Feed, FeedItem
 
 
 class FeedSerializer(serializers.ModelSerializer):
-    create_date = serializers.DateTimeField(read_only=True)
-    last_fetch = serializers.DateTimeField(read_only=True)
-    last_updated = serializers.DateTimeField(read_only=True)
+    create_date = serializers.DateTimeField(read_only=True, format="%B %e,%l:%M %p")
+    last_fetch = serializers.DateTimeField(read_only=True, format="%B %e,%l:%M %p")
+    last_updated = serializers.DateTimeField(read_only=True, format="%B %e,%l:%M %p")
     attempt = serializers.IntegerField(read_only=True)
     terminated = serializers.BooleanField(read_only=True)
     id = serializers.IntegerField(read_only=True)
@@ -27,10 +27,12 @@ class FeedSerializer(serializers.ModelSerializer):
 
 
 class FeedItemSerializer(serializers.ModelSerializer):
-    comments = CommentSerializer(many=True)
+    comments = serializers.SerializerMethodField()
 
     is_favorite = serializers.SerializerMethodField()
     is_read = serializers.SerializerMethodField()
+
+    published = serializers.DateTimeField(format="%B %e,%l:%M %p")
 
     class Meta:
         model = FeedItem
@@ -46,6 +48,14 @@ class FeedItemSerializer(serializers.ModelSerializer):
             "comments",
             "read_link",
         )
+
+    def get_comments(self, obj):
+        user = self.context.get("request").user
+        comments = obj.comments.filter(user=user.pk)
+        serializer = CommentSerializer(data=comments, many=True)
+        serializer.is_valid()
+
+        return serializer.data
 
     def get_is_favorite(self, obj):
         user = self.context.get("request").user
