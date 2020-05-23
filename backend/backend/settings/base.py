@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "rest_framework_jwt.blacklist",
     "corsheaders",
+    "django_filters",
 ] + APPS
 
 MIDDLEWARE = [

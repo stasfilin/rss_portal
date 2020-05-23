@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, mixins
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -6,12 +6,12 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from api.serializers.feed import FeedSerializer, FeedItemSerializer
+from feed.filters import FeedItemFilterSet
 from feed.models import Feed, FeedItem
 from feed.parser import feed_parser
 
 
 class FeedView(ModelViewSet):
-
     queryset = Feed.objects.none()
     serializer_class = FeedSerializer
 
@@ -40,11 +40,13 @@ class FeedView(ModelViewSet):
 
 
 class FeedItemView(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewSet):
-
     queryset = FeedItem.objects.none()
     serializer_class = FeedItemSerializer
 
     permission_classes = (IsAuthenticated,)
+
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = FeedItemFilterSet
 
     def get_queryset(self):
         return self.request.user.feed_items.all()
