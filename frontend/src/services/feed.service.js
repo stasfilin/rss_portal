@@ -4,8 +4,9 @@ import authHeader from './auth-header';
 const API_URL = 'http://127.0.0.1:8000/api/';
 
 class FeedService {
-  getFeedItems(offset=0) {
-    return axios.get(API_URL + 'feed-item/?offset='+offset, { headers: authHeader() });
+  getFeedItems(offset=0, choice = "") {
+    console.log(choice)
+    return axios.get(API_URL + 'feed-item/?offset='+offset+'&filter='+choice, { headers: authHeader() });
   }
 
   makeFavourite(feed_item_id) {

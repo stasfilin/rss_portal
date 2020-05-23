@@ -134,10 +134,10 @@ import FeedService from '../services/feed.service';
         this.dialog = true
       },
       deleteItem (item) {
-        const index = this.data.indexOf(item)
         if (confirm('Are you sure you want to delete this item?')) {
           {
             FeedService.deleteFeed(item).then(
+                    // eslint-disable-next-line no-unused-vars
               response => {
                 this.initialize()
               },
@@ -153,6 +153,7 @@ import FeedService from '../services/feed.service';
       },
       fetchItem (item) {
             FeedService.fetchFeed(item).then(
+                    // eslint-disable-next-line no-unused-vars
               response => {
                 this.initialize()
               },
@@ -174,6 +175,7 @@ import FeedService from '../services/feed.service';
       save () {
         if (this.editedIndex > -1) {
           FeedService.updateFeed(this.editedItem).then(
+                  // eslint-disable-next-line no-unused-vars
           response => {
             this.initialize()
           },

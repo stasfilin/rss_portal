@@ -1,5 +1,38 @@
 <template>
     <v-container fluid>
+        <v-row
+                align="center"
+                justify="center"
+        >
+            <v-btn-toggle
+                    v-model="toggle_exclusive"
+            >
+                <v-btn
+                        value="all"
+                        @click="filterItems('all')"
+                >
+                    All
+                </v-btn>
+                <v-btn
+                        value="favorite"
+                        @click="filterItems('favorite')"
+                >
+                    Favorite
+                </v-btn>
+                <v-btn
+                        value="read"
+                        @click="filterItems('read')"
+                >
+                    Read
+                </v-btn>
+                <v-btn
+                        value="unread"
+                        @click="filterItems('unread')"
+                >
+                    Unread
+                </v-btn>
+            </v-btn-toggle>
+        </v-row>
         <v-data-iterator
                 :items="items"
                 :page="page"
@@ -37,7 +70,8 @@
                             </v-card-actions>
                             <v-card-text>
                                 <p class="display-1 text--primary">
-                                    <a v-bind:href="item.link" target="_blank" @click="changeToRead(item)">{{ item.title }}</a>
+                                    <a v-bind:href="item.link" target="_blank" @click="changeToRead(item)">{{ item.title
+                                        }}</a>
                                 </p>
                                 <p>{{ item.author }}</p>
                                 <div class="text--primary">
@@ -83,7 +117,8 @@
                                             <v-col cols="5" class="text-right">
                                                 <v-btn icon>
                                                     <div>
-                                                        <v-icon color="grey" @click="removeComment(event)">mdi-delete</v-icon>
+                                                        <v-icon color="grey" @click="removeComment(event)">mdi-delete
+                                                        </v-icon>
                                                     </div>
                                                 </v-btn>
                                             </v-col>
@@ -121,6 +156,7 @@
                 offset: 10,
                 itemsPerPage: 10,
                 show: false,
+                toggle_exclusive: 'all',
                 keys: [
                     'title',
                     'link',
@@ -154,6 +190,7 @@
             },
             addFavourite: function (article) {
                 FeedService.makeFavourite(article.id).then(
+                    // eslint-disable-next-line no-unused-vars
                     response => {
                         this.initialize();
                     },
@@ -186,6 +223,7 @@
 
             changeToRead: function (article) {
                 FeedService.makeRead(article.id).then(
+                    // eslint-disable-next-line no-unused-vars
                     response => {
                         this.initialize();
                     },
@@ -200,6 +238,7 @@
 
             removeComment: function (comment) {
                 CommentService.deleteComment(comment).then(
+                    // eslint-disable-next-line no-unused-vars
                     response => {
                         this.initialize();
                     },
@@ -225,6 +264,25 @@
                             error.toString();
                     }
                 )
+            },
+            filterItems(choice) {
+                if (choice === 'all')
+                {
+                 this.initialize();
+                }
+                else {
+                    FeedService.getFeedItems(0, choice).then(
+                    response => {
+                        this.items = response.data.results;
+                    },
+                    error => {
+                        this.data =
+                            (error.response && error.response.data) ||
+                            error.message ||
+                            error.toString();
+                    }
+                )
+                }
             }
         },
     }
