@@ -17,7 +17,7 @@
                         value="favorite"
                         @click="filterItems('favorite')"
                 >
-                    Favorite
+                    Favourites
                 </v-btn>
                 <v-btn
                         value="read"
