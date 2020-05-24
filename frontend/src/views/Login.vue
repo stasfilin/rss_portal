@@ -46,9 +46,6 @@
         <div class="form-group">
           <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
         </div>
-        <div class="form-group">
-            <router-link to="/register" class="nav-link">Sign Up</router-link>
-        </div>
       </form>
     </div>
   </div>
