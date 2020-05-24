@@ -43,6 +43,12 @@ class FeedService {
         { headers: authHeader() });
   }
 
+  fetchAllFeed() {
+    return axios.get(API_URL + 'feed/fetch_all/',
+        { headers: authHeader() });
+  }
+
+
   makeRead(feed_item_id) {
     return axios.get(API_URL + 'feed-item/'+feed_item_id+'/read/', { headers: authHeader() });
   }

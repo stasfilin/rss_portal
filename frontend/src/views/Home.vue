@@ -17,6 +17,8 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
             <v-btn color="primary" dark class="mb-2" v-on="on">Add New Source</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn color="black" dark class="mb-2" @click="fetchAll()">Fetch All</v-btn>
           </template>
           <v-card>
             <v-card-title>
@@ -44,6 +46,9 @@
           </v-card>
         </v-dialog>
       </v-toolbar>
+    </template>
+    <template v-slot:item.terminated="{ item }">
+      <v-chip :color="getColor(item.terminated)" dark>{{ getTerminatedMessage(item.terminated) }}</v-chip>
     </template>
     <template v-slot:item.actions="{ item }">
       <v-icon
@@ -165,6 +170,27 @@ import FeedService from '../services/feed.service';
               }
               )
           },
+      fetchAll() {
+            FeedService.fetchAllFeed().then(
+              response => {
+                this.initialize()
+              },
+              error => {
+                this.data =
+                  (error.response && error.response.data) ||
+                  error.message ||
+                  error.toString();
+              }
+              )
+          },
+      getColor (terminated) {
+        if (terminated) return 'red'
+        else return 'green'
+      },
+      getTerminatedMessage (terminated) {
+        if (terminated) return 'You need to update Feed Source'
+        else return 'Subscribed, all works well'
+      },
       close () {
         this.dialog = false
         this.$nextTick(() => {
