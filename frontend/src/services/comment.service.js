@@ -6,7 +6,7 @@ const API_URL = 'http://127.0.0.1:8000/api/';
 class CommentService {
   addComment(article, content) {
     return axios.post(API_URL + 'comment/', {
-        feed_item_id: article.id,
+        feed_item: article.id,
         content: content
       },
         { headers: authHeader() });
