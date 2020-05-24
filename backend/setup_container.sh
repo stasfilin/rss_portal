@@ -5,4 +5,5 @@ apt-get update && apt-get install -y \
 
 pip install --upgrade pip
 pip install -r requirements/base.txt
+pip install -r requirements/development.txt
 chmod +x /app/runserver.sh
