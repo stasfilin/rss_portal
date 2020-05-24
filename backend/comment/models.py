@@ -1,9 +1,15 @@
-from django.db import models
-from feed.models import FeedItem
 from django.conf import settings
+from django.db import models
+
+from feed.models import FeedItem
 
 
 class Comment(models.Model):
+    """
+    Comment model
+    Default ordering by date_added. Newest first
+    """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments"
     )

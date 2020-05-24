@@ -7,6 +7,10 @@ from api.serializers.user import SignUpSerializer
 
 
 class SignUpView(mixins.CreateModelMixin, GenericViewSet):
+    """
+    Sign Up View.
+    Permission - AllowAny, all people can create new user
+    """
 
     queryset = User.objects.none()
     serializer_class = SignUpSerializer

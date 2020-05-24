@@ -2,6 +2,11 @@ from django_filters import rest_framework as filters
 
 
 class FeedItemFilterSet(filters.FilterSet):
+    """
+    Custom filter for Feed Item API.
+    Filtering Articles by favorite, read and unread
+    """
+
     filter = filters.CharFilter(method="get_filter", field_name="custom_filter")
 
     def get_filter(

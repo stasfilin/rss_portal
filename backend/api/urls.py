@@ -6,9 +6,9 @@ from rest_framework_jwt.views import (
     verify_jwt_token,
 )
 
-from api.views import user as user_view
-from api.views import feed as feed_view
 from api.views import comment as comment_view
+from api.views import feed as feed_view
+from api.views import user as user_view
 
 urlpatterns = [
     path("signin/", obtain_jwt_token, name="signin_token_obtain"),

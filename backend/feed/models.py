@@ -1,11 +1,16 @@
 import feedparser
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.conf import settings
-from django.urls import reverse
 
 
-def url_validation(value):
+def url_validation(value) -> None:
+    """
+    URL validation function.
+    Checking if this is RSS url
+    :param value: url
+    :return: None
+    """
     parsed_feed = feedparser.parse(value)
     if parsed_feed.get("bozo_exception"):
         raise ValidationError(
@@ -14,6 +19,11 @@ def url_validation(value):
 
 
 class Feed(models.Model):
+    """
+    Feed Model
+    Main model, user can add feed with custom title
+    """
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="feeds"
     )
@@ -32,6 +42,17 @@ class Feed(models.Model):
 
 
 class FeedItem(models.Model):
+    """
+    Feed Item model
+    Main model for articles
+
+    Adding some database optimization. Fields: feed, users, is_favorite, is_read = ManyToMany.
+    The main reason for this is that few user can add the same Feed URL, so we can store only one Article for few users.
+
+    For is_favorite and is_read in future we can add Article Global Statistic. All users can see how many users add
+    mark this article like a favorite
+    """
+
     feed = models.ManyToManyField(Feed, related_name="items")
 
     title = models.CharField(max_length=200, blank=True)
@@ -47,9 +68,6 @@ class FeedItem(models.Model):
     is_read = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="read_items"
     )
-
-    def read_link(self):
-        return reverse("feeditem-read", args=[self.pk])
 
     class Meta:
         ordering = ["-published"]

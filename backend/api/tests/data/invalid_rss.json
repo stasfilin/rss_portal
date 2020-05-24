@@ -1,0 +1,25 @@
+{
+  "feed": {},
+  "entries": [],
+  "bozo": 1,
+  "headers": {
+    "Date": "Sun, 24 May 2020 12:03:08 GMT",
+    "Expires": "-1",
+    "Cache-Control": "private, max-age=0",
+    "Content-Type": "text/html; charset=ISO-8859-1",
+    "P3P": "CP=\"This is not a P3P policy! See g.co/p3phelp for more info.\"",
+    "Content-Encoding": "gzip",
+    "Server": "gws",
+    "Content-Length": "5829",
+    "X-XSS-Protection": "0",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Set-Cookie": "1P_JAR=2020-05-24-12; expires=Tue, 23-Jun-2020 12:03:08 GMT; path=/; domain=.google.com; Secure",
+    "Connection": "close"
+  },
+  "href": "http://www.google.com",
+  "status": 200,
+  "encoding": "ISO-8859-1",
+  "bozo_exception": "syntax error",
+  "version": "",
+  "namespaces": {}
+}

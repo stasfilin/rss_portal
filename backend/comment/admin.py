@@ -5,4 +5,6 @@ from comment.models import Comment
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    """
+    Add Comment to Admintool
+    """

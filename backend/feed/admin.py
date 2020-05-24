@@ -5,6 +5,10 @@ from feed.models import Feed, FeedItem
 
 @admin.register(Feed)
 class FeedAdmin(admin.ModelAdmin):
+    """
+    Add Feed Model to Admintool
+    """
+
     list_display = (
         "title",
         "url",
@@ -25,6 +29,10 @@ class FeedAdmin(admin.ModelAdmin):
 
 @admin.register(FeedItem)
 class FeedItemAdmin(admin.ModelAdmin):
+    """
+    Add Feed Item Model to Admintool
+    """
+
     list_display = (
         "title",
         "link",

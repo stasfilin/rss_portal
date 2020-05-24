@@ -1,5 +1,6 @@
-from celery.task import periodic_task, task
 from celery.schedules import crontab
+from celery.task import periodic_task
+
 from feed.models import Feed
 from feed.parser import feed_parser
 
@@ -7,7 +8,11 @@ from feed.parser import feed_parser
 @periodic_task(
     run_every=(crontab(minute="*/10")), name="fetch_feeds", ignore_result=True
 )
-def fetch_feeds():
+def fetch_feeds() -> int:
+    """
+    Celery function for fetching feeds every 10 min
+    :return: Total
+    """
     feeds = Feed.objects.filter(terminated=False)
     total = 0
     for feed in feeds:

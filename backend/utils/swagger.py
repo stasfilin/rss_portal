@@ -1,6 +1,7 @@
+from collections import OrderedDict
+
 from drf_yasg.inspectors import SwaggerAutoSchema
 from drf_yasg.utils import no_body
-from collections import OrderedDict
 
 
 class ReadOnly(object):
@@ -26,6 +27,10 @@ class BlankMeta:
 
 
 class ReadWriteAutoSchema(SwaggerAutoSchema):
+    """
+    Custom Swagger Auto Schema for showing read_only/write_only fields in redoc
+    """
+
     def get_view_serializer(self):
         return self._convert_serializer(WriteOnly)
 

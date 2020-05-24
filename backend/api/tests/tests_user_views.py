@@ -6,7 +6,14 @@ from utils.testcase import TestCase
 
 
 class UserTests(TestCase):
+    """
+    User API Test Case for Login and Registration
+    """
+
     def test_valid_signup(self):
+        """
+        Test Signup with valid data
+        """
         url = "/api/signup/"
 
         user_password = get_random_string()
@@ -19,6 +26,9 @@ class UserTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_signin(self):
+        """
+        Test signin with valid data
+        """
         url = "/api/signin/"
 
         user_password = get_random_string()

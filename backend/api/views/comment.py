@@ -12,6 +12,9 @@ class CommentView(
     mixins.DestroyModelMixin,
     GenericViewSet,
 ):
+    """
+    Comment View for adding, update and remove comment
+    """
 
     queryset = Comment.objects.none()
     serializer_class = CommentSerializer
@@ -19,10 +22,20 @@ class CommentView(
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
+        """
+        Change queryset to user comments
+        :return: User comments queryset
+        """
         return self.request.user.comments.all()
 
     def perform_create(self, serializer):
+        """
+        Add user when he create new comment
+        """
         serializer.save(user=self.request.user)
 
     def perform_update(self, serializer):
+        """
+        Add user when he update comment
+        """
         serializer.save(user=self.request.user)
