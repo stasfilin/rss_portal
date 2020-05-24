@@ -7,7 +7,9 @@
       <v-toolbar-title to="/"><router-link to="/" class="nav-link">RSS Parser</router-link></v-toolbar-title>
 
       <div v-if="currentUser">
-          <v-toolbar-title><router-link to="/feed" class="nav-link">Feed</router-link></v-toolbar-title>
+          <v-toolbar-title>
+            <router-link to="/feed" class="nav-link">Feed Items</router-link>
+          </v-toolbar-title>
       </div>
 
       <v-spacer></v-spacer>

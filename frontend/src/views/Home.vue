@@ -16,9 +16,8 @@
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on">Add New Source</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn color="black" dark class="mb-2" @click="fetchAll()">Fetch All</v-btn>
+            <v-btn color="primary" dark class="ma-2" v-on="on">Add New Source</v-btn>
+            <v-btn dark class="ma-2" tile outlined color="black" @click="fetchAll()">Fetch All</v-btn>
           </template>
           <v-card>
             <v-card-title>
@@ -151,6 +150,7 @@ import FeedService from '../services/feed.service';
                   (error.response && error.response.data) ||
                   error.message ||
                   error.toString();
+                  alert("Invalid data");
               }
               )
           }
@@ -167,6 +167,7 @@ import FeedService from '../services/feed.service';
                   (error.response && error.response.data) ||
                   error.message ||
                   error.toString();
+                  alert("Invalid data");
               }
               )
           },
@@ -180,6 +181,7 @@ import FeedService from '../services/feed.service';
                   (error.response && error.response.data) ||
                   error.message ||
                   error.toString();
+                  alert("Invalid data");
               }
               )
           },
@@ -210,6 +212,7 @@ import FeedService from '../services/feed.service';
               (error.response && error.response.data) ||
               error.message ||
               error.toString();
+              alert("Invalid data");
           }
           )
         } else {
@@ -222,6 +225,9 @@ import FeedService from '../services/feed.service';
               (error.response && error.response.data) ||
               error.message ||
               error.toString();
+
+              console.log(this.data);
+              alert("Invalid data");
           }
           )
         }
